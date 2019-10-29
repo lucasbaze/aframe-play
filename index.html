@@ -12,14 +12,26 @@
 </head>
 
 <body>
-    <a-scene stats>
-        <a-entity
-            id="ball"
-            color="green"
-            position="0 1 -4"
-            geometry="primitive:sphere; radius:0.5"
-            dynamic-body
-        ></a-entity>
+    <a-scene stats physics="debug: true">
+        <a-assets>
+            <a-asset-item id="imp" src="models/imp/scene.gltf"></a-asset-item>
+            <a-asset-item
+                id="staff"
+                src="models/staff/scene.gltf"
+            ></a-asset-item>
+            <a-asset-item id="rock" src="models/rock/scene.gltf"></a-asset-item>
+            <a-asset-item
+                id="cauldron"
+                src="models/cauldron/scene.gltf"
+            ></a-asset-item>
+            <a-asset-item id="tree" src="models/tree/scene.gltf"></a-asset-item>
+        </a-assets>
+
+        <!-- Start of Scene -->
+        <a-entity position="1.5 0 -3.5" gltf-model="#cauldron"></a-entity>
+        <a-entity id="ball" position="0 1 -4" dynamic-body>
+            <a-entity id="imp-model" gltf-model="#imp"></a-entity>
+        </a-entity>
         <a-plane
             rotation="-90 0 0"
             color="orange"
@@ -37,14 +49,13 @@
                 width="5"
                 anchor="left"
             ></a-text>
-            <a-entity position="0 0 -3" id="weapon">
-                <a-box
-                    height="0.5"
-                    width="0.25"
-                    depth="3"
-                    color="blue"
-                    static-body
-                ></a-box>
+            <a-entity
+                position="0 0 -3"
+                rotation="20 0 0"
+                id="weapon"
+                static-body="shape:sphere; sphereRadius: 0.3"
+            >
+                <a-entity gltf-model="#staff"></a-entity>
             </a-entity>
         </a-entity>
     </a-scene>
