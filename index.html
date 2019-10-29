@@ -4,10 +4,67 @@
     <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <!-- Physics -->
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+    <script src="js/random.js"></script>
+    <script src="https://unpkg.com/aframe-randomizer-components@3.0.2/dist/aframe-randomizer-components.min.js"></script>
     <script>
         $ = sel => document.querySelector(sel);
         $$ = sel => document.querySelectorAll(sel);
         on = (elem, type, hand) => elem.addEventListener(type, hand);
+    </script>
+
+    <script>
+        function rand(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        AFRAME.registerComponent('distribute', {
+            schema: {
+                src: { type: 'string' },
+                jitter: { type: 'vec3' },
+                centerOffset: { type: 'vec3' },
+                radius: { type: 'number' },
+            },
+            init: function() {
+                const rg = new Random(Random.engines.mt19937().seed(10));
+                const center = new THREE.Vector3(
+                    this.data.centerOffset.x,
+                    this.data.centerOffset.y,
+                    this.data.centerOffset.z
+                );
+                const jx = this.data.jitter.x;
+                const jy = this.data.jitter.y;
+                const jz = this.data.jitter.z;
+                if ($(this.data.src).hasLoaded) {
+                    const s = this.data.radius;
+                    for (let i = -s; i < s; i++) {
+                        for (let j = -s; j < s; j++) {
+                            const el = document.createElement('a-entity');
+                            el.setAttribute('gltf-model', this.data.src);
+                            const offset = new THREE.Vector3(
+                                i * s + rg.real(-jx, jx),
+                                rg.real(-jy, jy),
+                                j * s - rg.real(-jz, jz)
+                            );
+                            el.setAttribute(
+                                'position',
+                                center.clone().add(offset)
+                            );
+                            el.setAttribute('rotation', {
+                                x: 0,
+                                y: (rg.real(-45, 45) * Math.PI) / 180,
+                                z: 0,
+                            });
+                            const scale = rg.real(0.5, 1.5);
+                            el.setAttribute('scale', {
+                                x: scale,
+                                y: scale,
+                                z: scale,
+                            });
+                            $('a-scene').appendChild(el);
+                        }
+                    }
+                }
+            },
+        });
     </script>
 </head>
 
@@ -29,6 +86,51 @@
 
         <!-- Start of Scene -->
         <a-entity position="1.5 0 -3.5" gltf-model="#cauldron"></a-entity>
+        <a-entity
+            distribute="jitter: 2 0.5 2; centerOffset: 0 -0.8 0; src:#rock; radius:3"
+        ></a-entity>
+        <a-entity position="1 0 -3" gltf-model="#rock"></a-entity>
+        <a-entity
+            position="10 0 -10"
+            scale="0.5 0.5 0.5"
+            gltf-model="#tree"
+        ></a-entity>
+        <a-entity
+            position="1 0 -12"
+            scale="0.3 0.3 0.3"
+            gltf-model="#tree"
+        ></a-entity>
+        <a-entity
+            position="-5 0 -5"
+            scale="0.3 0.3 0.3"
+            gltf-model="#tree"
+        ></a-entity>
+        <a-entity
+            position="10 0 -1"
+            scale="0.5 0.5 0.5"
+            gltf-model="#tree"
+        ></a-entity>
+        <a-entity
+            position="-10 0 1"
+            scale="0.5 0.5 0.5"
+            gltf-model="#tree"
+        ></a-entity>
+        <a-entity
+            position="-4 0 5"
+            scale="0.2 0.2 0.2"
+            gltf-model="#tree"
+        ></a-entity>
+
+        <a-entity
+            position="4 0 10"
+            scale="0.2 0.2 0.2"
+            gltf-model="#tree"
+        ></a-entity>
+        <a-entity
+            position="-10 0 -15"
+            scale="0.3 0.3 0.3"
+            gltf-model="#tree"
+        ></a-entity>
         <a-entity id="ball" position="0 1 -4" dynamic-body>
             <a-entity id="imp-model" gltf-model="#imp"></a-entity>
         </a-entity>
@@ -39,23 +141,25 @@
             height="100"
             static-body
         ></a-plane>
-        <a-entity camera look-controls wasd-controls position="0 1.5 0">
-            <a-cursor></a-cursor>
-            <a-text
-                id="score"
-                value="Score"
-                position="-0.2 -0.5 -1"
-                color="red"
-                width="5"
-                anchor="left"
-            ></a-text>
-            <a-entity
-                position="0 0 -3"
-                rotation="20 0 0"
-                id="weapon"
-                static-body="shape:sphere; sphereRadius: 0.3"
-            >
-                <a-entity gltf-model="#staff"></a-entity>
+        <a-entity movement-controls="fly: true">
+            <a-entity camera look-controls wasd-controls position="0 1.5 0">
+                <a-cursor></a-cursor>
+                <a-text
+                    id="score"
+                    value="Score"
+                    position="-0.2 -0.5 -1"
+                    color="red"
+                    width="5"
+                    anchor="left"
+                ></a-text>
+                <a-entity
+                    position="0 0 -3"
+                    rotation="20 0 0"
+                    id="weapon"
+                    static-body="shape:sphere; sphereRadius: 0.3"
+                >
+                    <a-entity gltf-model="#staff"></a-entity>
+                </a-entity>
             </a-entity>
         </a-entity>
     </a-scene>
