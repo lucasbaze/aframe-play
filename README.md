@@ -14,7 +14,7 @@ There are two easy options for obtaining this A-Frame scene. It's then up to you
 
 [<img src="http://i.imgur.com/UVPZoM0.png" width="200">](https://github.com/aframevr/aframe-boilerplate/archive/master.zip)
 
-After you have __[downloaded and extracted this `.zip` file](https://github.com/aframevr/aframe-boilerplate/archive/master.zip)__ containing the contents of this repo, open the resulting directory, and you'll be have your scene ready in these few steps:
+After you have **[downloaded and extracted this `.zip` file](https://github.com/aframevr/aframe-boilerplate/archive/master.zip)** containing the contents of this repo, open the resulting directory, and you'll be have your scene ready in these few steps:
 
     npm install && npm start
     open http://localhost:3000/
@@ -23,9 +23,9 @@ After you have __[downloaded and extracted this `.zip` file](https://github.com/
 
 ### <small><sup>Option 2:</sup> Fork this Git repo 🍴🐙
 
-Alternatively, you can __[fork this repo](https://github.com/aframevr/aframe-boilerplate/fork)__ to get started, if you'd like to maintain a Git workflow.
+Alternatively, you can **[fork this repo](https://github.com/aframevr/aframe-boilerplate/fork)** to get started, if you'd like to maintain a Git workflow.
 
-After you have __[forked this repo](https://github.com/aframevr/aframe-boilerplate/fork)__, clone a copy of your fork locally and you'll be have your scene ready in these few steps:
+After you have **[forked this repo](https://github.com/aframevr/aframe-boilerplate/fork)**, clone a copy of your fork locally and you'll be have your scene ready in these few steps:
 
     git clone https://github.com/aframevr/aframe-boilerplate.git
     cd aframe-boilerplate && rm -rf .git && npm install && npm start
@@ -37,18 +37,17 @@ After you have __[forked this repo](https://github.com/aframevr/aframe-boilerpla
 
 ### <small><sup>Option 3:</sup> Fork this CodePen example 🍴💾✒️
 
-Or, you can simply __[fork this CodePen example](http://codepen.io/team/mozvr/pen/BjygdO?editors=100)__ to dive right in. Enjoy!
-
+Or, you can simply **[fork this CodePen example](http://codepen.io/team/mozvr/pen/BjygdO?editors=100)** to dive right in. Enjoy!
 
 ## Publishing your scene
 
-If you don't already know, GitHub offers free and awesome publishing of static sites through __[GitHub Pages](https://pages.github.com/)__.
+If you don't already know, GitHub offers free and awesome publishing of static sites through **[GitHub Pages](https://pages.github.com/)**.
 
 To publish your scene to your personal GitHub Pages:
 
     npm run deploy
 
-And, it'll now be live at __http://`your_username`.github.io/__ :)
+And, it'll now be live at **http://`your_username`.github.io/** :)
 
 <hr>
 
@@ -70,7 +69,6 @@ To install the Node dependencies:
 
     npm install
 
-
 ### Local Development
 
 To serve the site from a simple Node development server:
@@ -79,12 +77,11 @@ To serve the site from a simple Node development server:
 
 Then launch the site from your favourite browser:
 
-[__http://localhost:3000/__](http://localhost:3000/)
+[**http://localhost:3000/**](http://localhost:3000/)
 
 If you wish to serve the site from a different port:
 
     PORT=8000 npm start
-
 
 ## License
 
