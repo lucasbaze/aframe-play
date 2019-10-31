@@ -70,8 +70,6 @@
 
 <body>
     <a-scene
-        stats
-        physics="debug: true"
         shadow
         sound="src: url(./audio/night.wav); loop: true; autoplay: true; volume: 0.5"
     >
@@ -92,12 +90,11 @@
         <!-- Camera -->
         <a-entity movement-controls="fly: true">
             <a-entity camera look-controls wasd-controls position="0 1.5 0">
-                <a-cursor></a-cursor>
                 <a-text
                     id="score"
                     value="Score"
                     position="-0.2 -0.5 -1"
-                    color="red"
+                    color="white"
                     width="5"
                     anchor="left"
                 ></a-text>
@@ -114,8 +111,8 @@
 
         <!-- Moon Lighting -->
         <a-entity
-            light="type: directional; color: #ffffff; intensity: 0.5; castShadow: true; shadowCameraVisible: true;"
-            position="0 30 -80"
+            light="type: directional; color: #ffffff; intensity: 0.05d; castShadow: true;"
+            position="30 60 -80"
         ></a-entity>
 
         <!-- hemisphere light going from white to dark blue -->
@@ -131,7 +128,7 @@
             sound="src: url(./audio/water.wav); autoplay: true; loop: true;"
         ></a-entity>
         <!-- Imp -->
-        <a-entity id="ball" position="0 1 -4" dynamic-body>
+        <a-entity id="ball" position="0 0 -4" rotation="0 0 0" dynamic-body>
             <a-entity
                 id="imp-model"
                 gltf-model="#imp"
@@ -217,16 +214,6 @@
             shadow="receive: true"
             static-body
         ></a-plane>
-
-        <!-- Headset
-         -->
-        <a-entity id='laser' laser-controls="hand: left" raycaster="showLine:false;" line="opacity:0.0;">
-            <a-entity rotation="-105 0 0" position="0 0 -3.5" id='weapon' static-body="shape:sphere; sphereRadius: 0.3;">
-                <a-entity scale="1.8 1.8 1.8" position="0 1.5 0">
-                    <a-entity position="2.3 -2.7 -16.3" gltf-model="#staff"></a-entity>
-                </a-entity>
-            </a-entity>
-        </a-entity>
     </a-scene>
     <script>
         let hit = false;
@@ -236,6 +223,9 @@
             $('#ball').body.position.set(0, 0.6, -4);
             $('#ball').body.velocity.set(0, 5, 0);
             $('#ball').body.angularVelocity.set(0, 0, 0);
+            showImp = Math.floor(Math.random() * 2) !== 0;
+            $('#egg-model').setAttribute('visible', !showImp);
+            $('#imp-model').setAttribute('visible', showImp);
             hit = false;
             resetId = setTimeout(resetBall, 6000);
         };
@@ -246,9 +236,15 @@
         on($('#weapon'), 'collide', e => {
             const ball = $('#ball');
             if (e.detail.body.id === ball.body.id && !hit) {
-                $('#imp-model').components.sound.playSound();
                 hit = true;
-                score = score + 1;
+                if (showImp) {
+                    $('#imp-model').components.sound.playSound();
+                    score = score + 1;
+                } else {
+                    $('#imp-model').components.sound.playSound();
+                    score = score - 10;
+                }
+
                 clearTimeout(resetId);
                 resetId = setTimeout(resetBall, 2000);
                 $('#score').setAttribute('text', 'value', 'Score ' + score);
